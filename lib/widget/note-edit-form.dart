@@ -4,8 +4,12 @@ import '../model/note.dart';
 
 class NoteEditForm extends StatefulWidget {
   final Note oldNote;
-  final Function (Note) editNote;
-  NoteEditForm({super.key, required this.editNote, required this.oldNote});
+  final Function(String, String) editNote;
+  const NoteEditForm({
+    super.key,
+    required this.editNote,
+    required this.oldNote,
+  });
 
   @override
   NoteEditFormState createState() => NoteEditFormState();
@@ -15,7 +19,6 @@ class NoteEditFormState extends State<NoteEditForm> {
   late TextEditingController titleController;
   late TextEditingController noteController;
 
-
   @override
   void initState() {
     super.initState();
@@ -23,8 +26,11 @@ class NoteEditFormState extends State<NoteEditForm> {
     noteController = TextEditingController(text: widget.oldNote.note);
   }
 
-
   _showEditNoteDialog() {
+    setState(() {
+      titleController.text = widget.oldNote.title;
+      noteController.text = widget.oldNote.note;
+    });
     showDialog(
       context: context,
       builder: (context) {
@@ -47,7 +53,10 @@ class NoteEditFormState extends State<NoteEditForm> {
                   Expanded(
                     child: ElevatedButton(
                       onPressed: () {
-                        widget.editNote(Note(title: titleController.text, note: noteController.text));
+                        widget.editNote(
+                          titleController.text,
+                          noteController.text,
+                        );
                         Navigator.pop(context);
                       },
                       child: Text('Edit Note'),
@@ -69,9 +78,6 @@ class NoteEditFormState extends State<NoteEditForm> {
 
   @override
   Widget build(BuildContext context) {
-    return IconButton(
-      onPressed: _showEditNoteDialog,
-      icon: Icon(Icons.edit),
-    );
+    return IconButton(onPressed: _showEditNoteDialog, icon: Icon(Icons.edit));
   }
 }

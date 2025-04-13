@@ -3,13 +3,12 @@ import 'package:ppb_isar/model/note.dart';
 import 'package:ppb_isar/widget/note-edit-form.dart';
 
 class NoteCard extends StatelessWidget {
-  final String title, note;
+  final Note note;
   final Function deleteNote;
-  final Function(Note) editNote;
+  final Function(String, String) editNote;
 
   const NoteCard({
     super.key,
-    required this.title,
     required this.note,
     required this.deleteNote,
     required this.editNote,
@@ -39,17 +38,14 @@ class NoteCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  title,
+                  note.title,
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
                 ),
-                Text(note),
+                Text(note.note),
               ],
             ),
           ),
-          NoteEditForm(
-            editNote: editNote,
-            oldNote: Note(title: title, note: note),
-          ),
+          NoteEditForm(editNote: editNote, oldNote: note),
           IconButton(icon: Icon(Icons.delete), onPressed: () => deleteNote()),
         ],
       ),

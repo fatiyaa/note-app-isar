@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 class NoteAddForm extends StatefulWidget {
-  final Function (String, String) addNote;
-  NoteAddForm({super.key, required this.addNote});
+  final Function(String, String) addNote;
+  const NoteAddForm({super.key, required this.addNote});
 
   @override
   NoteAddFormState createState() => NoteAddFormState();
@@ -13,6 +13,10 @@ class NoteAddFormState extends State<NoteAddForm> {
   String note = '';
 
   _showAddNoteDialog() {
+    setState(() {
+      title = '';
+      note = '';
+    });
     showDialog(
       context: context,
       builder: (context) {
