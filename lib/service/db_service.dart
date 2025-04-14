@@ -32,15 +32,6 @@ class DB {
     await isar.writeTxn(() => isar.notes.put(note));
   }
 
-  Future<List<Note>> getNotes() async {
-    final isar = await db;
-    try {
-      return await isar.notes.where().findAll();
-    } catch (e) {
-      return [];
-    }
-  }
-
   Future<void> deleteNote(int id) async {
     final isar = await db;
     await isar.writeTxn(() => isar.notes.delete(id));
